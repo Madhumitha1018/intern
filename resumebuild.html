@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Builder</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+    }
+    #templates {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .template {
+        display: inline-block;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-right: 10px;
+        cursor: pointer;
+        background-color: #fff;
+    }
+    .template:hover {
+        background-color: #f0f0f0;
+    }
+    #resume-container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 70%;
+        margin: 0 auto;
+        background-color: #fff;
+    }
+    #resume {
+        padding: 10px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        background-color: #FFA500;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #FFA500;
+    }
+</style>
+</head>
+<body>
+    <h1>Resume Builder</h1>
+    <div id="templates">
+        <div class="template" onclick="selectTemplate(1)">Template 1</div>
+        <div class="template" onclick="selectTemplate(2)">Template 2</div>
+        <div class="template" onclick="selectTemplate(3)">Template 3</div>
+    </div>
+    <div id="resume-container">
+        <h2>Resume Preview</h2>
+        <form id="resume-form" onsubmit="event.preventDefault();">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" placeholder="Enter your email">
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" placeholder="Enter your phone number">
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" placeholder="Enter your address">
+
+            <label for="softskills">Soft skills:</label>
+            <input type="text" id="softskill" placeholder="Enter your softskill">
+        
+            <label for="hardskill">Hard skills:</label>
+            <input type="text" id="hardskill" placeholder="Enter your hardskill">
+            
+            <label for="achivement">Achivements:</label>
+            <input type="text" id="achivement" placeholder="Enter your achivement">
+            
+            <label for="education">Education:</label>
+            <input type="text" id="education" placeholder="Enter your education">
+            
+            <label for="experience">Experience:</label>
+            <input type="text" id="experience" placeholder="Enter your experience">
+
+           <label for="languages">Languages:</label>
+            <input type="text" id="language" placeholder="Enter your language">
+
+
+            <label for="template">Select Template:</label>
+            <select id="template">
+                <option value="1">Template 1</option>
+                <option value="2">Template 2</option>
+                <option value="3">Template 3</option>
+            </select>
+
+            <button onclick="generateResume()">Generate Resume</button>
+        </form>
+        <div id="resume"></div>
+    </div>
+    
+    <script>
+        function selectTemplate(templateId) {
+            document.getElementById('template').value = templateId;
+        }
+
+        function generateResume() {
+            // Clear previous content
+            document.getElementById('resume').innerHTML = "";
+            // Get user inputs
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const softskill = document.getElementById('softskill').value;
+            const hardskill = document.getElementById('hardskill').value;
+            const achivement = document.getElementById('achivement').value;
+            const templateId = document.getElementById('template').value;
+            const education = document.getElementById('education').value;
+            const experience = document.getElementById('experience').value;
+            const language = document.getElementById('language').value;
+            
+            // Create HTML based on selected template
+            let resumeHTML = "";
+            if (templateId === "1") {
+                resumeHTML = `
+                    <div style="text-align: center;">
+                        <h3>${name}</h3>
+                        <p>Email: ${email}</p>
+                        <p>Phone: ${phone}</p>
+                        <p>Address: ${address}</p>
+                        <p>Softskill: ${softskill}</p>
+                        <p>hardkill: ${hardskill}</p>
+                        <p>achivement: ${achivement}</p>
+                        <p>education: ${education}</p>
+                        <p>experience: ${experience}</p>
+                        <p>language: ${language}</p>
+                    </div>
+                `;
+            } else if (templateId === "2") {
+                resumeHTML = `
+                    <div style="background-color: #f0f0f0; padding: 20px;">
+                        <h2>${name}</h2>
+                        <p>Email: ${email}</p>
+                        <p>Phone: ${phone}</p>
+                        <p>Address: ${address}</p>
+                        <p>Softskill: ${softskill}</p>
+                        <p>hardkill: ${hardskill}</p>
+                        <p>achivement: ${achivement}</p>
+                        <p>education: ${education}</p>
+                        <p>experience: ${experience}</p>
+                        <p>language: ${language}</p>
+                    </div>
+                `;
+            } else if (templateId === "3") {
+                resumeHTML = `
+                    <div style="border: 1px solid #ccc; padding: 20px;">
+                        <h1>${name}</h1>
+                        <p>Email: ${email}</p>
+                        <p>Phone: ${phone}</p>
+                        <p>Address: ${address}</p>
+                        <p>Softskill: ${softskill}</p>
+                        <p>hardkill: ${hardskill}</p>
+                        <p>achivement: ${achivement}</p>
+                        <p>education: ${education}</p>
+                        <p>experience: ${experience}</p>
+                        <p>language: ${language}</p>
+                    </div>
+                `;
+            }
+            
+            // Display the generated resume
+            document.getElementById('resume').innerHTML = resumeHTML;
+
+            // Download as text file
+            const filename = 'resume.txt';
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(resumeHTML));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+    </script>
+</body>
+</html>

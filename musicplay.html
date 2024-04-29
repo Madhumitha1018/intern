@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Player</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+    }
+    #music-player {
+        text-align: center;
+    }
+    #playlist {
+        margin-top: 20px;
+    }
+    .song {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+    }
+    .song:hover {
+        background-color: #f0f0f0;
+    }
+    audio {
+        width: 100%;
+        margin-top: 20px;
+    }
+    #controls {
+        margin-top: 10px;
+    }
+    #progress-container {
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Music Player</h1>
+        <div id="music-player">
+            <div id="playlist">
+                <div class="song" onclick="playSong(0)">Song 1 - Artist 1</div>
+                <div class="song" onclick="playSong(1)">Song 2 - Artist 2</div>
+                <div class="song" onclick="playSong(2)">Song 3 - Artist 3</div>
+            </div>
+            <audio id="audio" controls>
+                Your browser does not support the audio element.
+            </audio>
+            <div id="controls">
+                <button onclick="prevSong()">Previous</button>
+                <button id="playPauseBtn" onclick="togglePlayPause()">Play</button>
+                <button onclick="nextSong()">Next</button>
+                <button onclick="toggleShuffle()">Shuffle</button>
+                <button onclick="toggleRepeat()">Repeat</button>
+            </div>
+            <div id="progress-container">
+                <input type="range" id="progress" value="0">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const playlist = document.querySelectorAll('.song');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progress = document.getElementById('progress');
+        const shuffleBtn = document.querySelector('#controls button:nth-of-type(4)');
+        const repeatBtn = document.querySelector('#controls button:nth-of-type(5)');
+
+        let currentSong = 0;
+        let isShuffle = false;
+        let isRepeat = false;
+
+        function playSong(index) {
+            currentSong = index;
+            audio.src = `song${index+1}.mp3`;
+            audio.play();
+            updatePlayPauseButton();
+        }
+
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+            updatePlayPauseButton();
+        }
+
+        function updatePlayPauseButton() {
+            if (audio.paused) {
+                playPauseBtn.textContent = 'Play';
+            } else {
+                playPauseBtn.textContent = 'Pause';
+            }
+        }
+
+        function nextSong() {
+            if (isShuffle) {
+                currentSong = Math.floor(Math.random() * playlist.length);
+            } else {
+                currentSong = (currentSong + 1) % playlist.length;
+            }
+            playSong(currentSong);
+        }
+
+        function prevSong() {
+            if (isShuffle) {
+                currentSong = Math.floor(Math.random() * playlist.length);
+            } else {
+                currentSong = (currentSong - 1 + playlist.length) % playlist.length;
+            }
+            playSong(currentSong);
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            shuffleBtn.classList.toggle('active', isShuffle);
+        }
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            repeatBtn.classList.toggle('active', isRepeat);
+            audio.loop = isRepeat;
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            const { currentTime, duration } = audio;
+            progress.value = (currentTime / duration) * 100;
+        });
+
+        progress.addEventListener('change', () => {
+            audio.currentTime = (progress.value * audio.duration) / 100;
+        });
+    </script>
+</body>
+</html>
